@@ -1,11 +1,28 @@
 version: '3'
+
 services:
-  #  POSTGRES
-  master_postgres:
+  # POSTGRES
+  postgres:
     image: postgres:17.0
+    container_name: postgres
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=postgres
     ports:
       - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # JENKINS
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+volumes:
+  postgres_data:
+  jenkins_home:
