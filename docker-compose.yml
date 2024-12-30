@@ -1,9 +1,9 @@
-version: '3'
+version: '3.8'
 
 services:
   # POSTGRES
   postgres:
-    image: postgres:17.0
+    image: postgres:17
     container_name: postgres
     environment:
       - POSTGRES_USER=user
@@ -17,12 +17,18 @@ services:
   # JENKINS
   jenkins:
     image: jenkins/jenkins:lts
-    container_name: jenkins
+    container_name: jenkins-server
     ports:
       - "8080:8080"
+      - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
+    networks:
+      - jenkins-network
 
 volumes:
   postgres_data:
   jenkins_home:
+
+networks:
+  jenkins-network:
